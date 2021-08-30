@@ -13,8 +13,6 @@ fetch("/json/myntra_api.json")
         id_check_Categories(data);
         id_check_Brand(data);
         id_Display_card(data);
-
-        select_Data(data);
     })
 
     // If there will any error will catch function will work and we can see error in console

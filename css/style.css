@@ -1,0 +1,12 @@
+* {
+    font-family: Whitney, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 14px;
+    color: #282c3f;
+}
+
+.form-control:focus{
+box-shadow: none;
+background-color: white;
+}

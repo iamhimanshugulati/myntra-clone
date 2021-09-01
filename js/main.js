@@ -9,10 +9,13 @@ fetch("/json/myntra_api.json")
 
     // Assigning Variables to fetch different data from object "products"
     .then((data) => {
-        id_check_Gender(data);
-        id_check_Categories(data);
-        id_check_Brand(data);
-        id_Display_card(data);
+        idCheckGender(data);
+        idCheckCategories(data);
+        idCheckBrand(data);
+        idDisplayCard(data);
+
+        // This is Filtered Function
+        selectData(data);
     })
 
     // If there will any error will catch function will work and we can see error in console
@@ -21,9 +24,9 @@ fetch("/json/myntra_api.json")
     })
 
 
-// id_check_Gender is used to show Gender, it will fetch unique values from "products" object value under array[] of "gender"
+// idCheckGender is used to show Gender, it will fetch unique values from "products" object value under array[] of "gender"
 
-id_check_Gender = (data) => {
+idCheckGender = (data) => {
 
     // Initiating an array to store data from an array "gender" 
     var genderArray = [];
@@ -48,21 +51,21 @@ id_check_Gender = (data) => {
     // For of is used for to fetch data from Objects and genderArray is an object
     for (const element of genderArray) {
         htmlContent += `<div class="custom-control custom-radio">
-        <input type="radio" id="Radio_button-${element}" value="${element}" name="genderFilter" class="custom-control-input">
-        <label class="custom-control-label" for="Radio_button-${element}">${element}</label>
+        <input type="radio" id="radioButton-${element}" value="${element}" name="genderFilter" class="custom-control-input" onclick="genderFilterFunction()">
+        <label class="custom-control-label" for="radioButton-${element}">${element}</label>
     </div>`;
 
     };
 
     // Calling DOM through ID and inserting values
-    document.getElementById("check_Gender").innerHTML = htmlContent;
+    document.getElementById("checkGender").innerHTML = htmlContent;
 
 };
 
 
-// id_check_Categories is used to show categories, it will fetch unique values from "products" object value under array[] of "category"
+// idCheckCategories is used to show categories, it will fetch unique values from "products" object value under array[] of "category"
 
-id_check_Categories = (data) => {
+idCheckCategories = (data) => {
 
     // Initiating an array to store data from an array "category"
     var categoryArray = [];
@@ -86,19 +89,19 @@ id_check_Categories = (data) => {
     // For of is used for to fetch data from Objects and genderArray is an object
     for (const element of categoryArray) {
         htmlContent += `<div class="form-check">
-        <input class="form-check-input" type="checkbox" value="${element}" id="checkbox-input-${element}" name="categoryFilter">
-        <label class="form-check-label" for="checkbox-input-${element}">${element}</label>
+        <input class="form-check-input" type="checkbox" value="${element}" id="checkboxInput-${element}" name="categoryFilter" onclick="categoriesFilterFunction()">
+        <label class="form-check-label" for="checkboxInput-${element}">${element}</label>
     </div>`;
 
     };
     // Calling DOM through ID and inserting values
-    document.getElementById("check_Categories").innerHTML = htmlContent;
+    document.getElementById("checkCategories").innerHTML = htmlContent;
 
 };
 
-// id_check_Brand is used to show brands, it will fetch unique values from "products" object value under array[] of "brand"
+// idCheckBrand is used to show brands, it will fetch unique values from "products" object value under array[] of "brand"
 
-id_check_Brand = (data) => {
+idCheckBrand = (data) => {
 
     // Initiating an array to store data from an array "brand"
     var brandArray = [];
@@ -122,26 +125,26 @@ id_check_Brand = (data) => {
     // For of is used for to fetch data from Objects and genderArray is an object
     for (const element of brandArray) {
         htmlContent += `<div class="form-check">
-            <input class="form-check-input" type="checkbox" value="${element}" id="checkbox-input-${element}">
-            <label class="form-check-label" for="checkbox-input-${element}">${element}</label>
+            <input class="form-check-input" type="checkbox" value="${element}" id="checkboxInput-${element}" name="brandFilter" onclick="brandsFilterFunction()">
+            <label class="form-check-label" for="checkboxInput-${element}">${element}</label>
         </div>`;
 
     };
     // Calling DOM through ID and inserting values   
-    document.getElementById("check_Brand").innerHTML = htmlContent;
+    document.getElementById("checkBrand").innerHTML = htmlContent;
 
 };
 
-// id_Display_card is used to show cards, it will fetch values for each product and show it in same card, from "products" object value under array[]such as "landingPageUrl" "brand" and more..
+// idDisplayCard is used to show cards, it will fetch values for each product and show it in same card, from "products" object value under array[]such as "landingPageUrl" "brand" and more..
 
-id_Display_card = (data) => {
+idDisplayCard = (data) => {
 
     // Assigning variable
     let htmlContent = ''
 
     // ForEach loop is used to fetch data from object "products"
     data.forEach(element => {
-         
+
         htmlContent += `
             <div class="col-md-3 my-1">
         <div class="card border-0 shadow-sm p-3 mb-5 bg-white rounded px-0 py-0" style="width: 17.5rem;"><a href="https://www.myntra.com/${element.landingPageUrl}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
@@ -155,10 +158,98 @@ id_Display_card = (data) => {
                     </div>
                     </div></a>`
     });
-    
+
     // Calling DOM through ID and inserting values
-    document.getElementById("display_card").innerHTML = htmlContent;
+    document.getElementById("displayCard").innerHTML = htmlContent;
 
 };
 
+// Applying Filters
 
+// Assigning a Variable into array to insert filtered data
+
+var filteredData = [];
+
+// Fetching Filtered Data
+
+const selectData = (data) => {
+    filteredData = data;
+};
+
+
+// Gender Radio Function
+
+function genderFilterFunction() {
+    
+    // Storing value in "genderValue" variable with help of name attribute 
+    var genderValue = document.querySelector('input[name="genderFilter"]:checked').value;
+    
+    // Filtering the selected data  and display accordingly
+    var data = filteredData.filter(
+        (genderValueFiltered) => genderValueFiltered.gender === genderValue);
+    idDisplayCard(data);
+};
+
+
+// Categories CheckBox Function
+
+function categoriesFilterFunction() {
+
+    // Storing value in "categoryValue" variable with help of name attribute
+    var categoryValue = document.querySelectorAll('input[name="categoryFilter"]:checked');
+    
+    // For multiple checks box creating an array named "categoryArray"
+    var categoryArray = [];
+
+    // Checking each check box wether checked or non checked with help of Ternary operator 
+    categoryValue.forEach(catElement => { catElement.checked ? categoryArray.push(catElement.value) : null; });
+
+    // New variable for multiple Checked-BOX 
+    var categoryArrayResult = [];
+
+    // Fetching Filtered Category data
+    categoryArray.forEach(value => {
+        categoryArrayResult = categoryArrayResult.concat(filteredData.filter((checkBoxData) => checkBoxData.category.includes(value)))
+    });
+
+    // Setting condition whether if check box are checked or not with hep of Ternary operator
+    categoryArrayResult.length !== 0 ? idDisplayCard(categoryArrayResult) : idDisplayCard(filteredData);
+};
+
+// Brand CheckBox Function
+
+function brandsFilterFunction() {
+
+    // Storing value in "brandValue" variable with help of name attribute
+    var brandValue = document.querySelectorAll('input[name="brandFilter"]:checked');
+
+    // For multiple checks box creating an array named "brandArray"
+    var brandArray = [];
+
+    // Checking each check box wether checked or non checked with help of Ternary operator
+    brandValue.forEach(brnElement => { brnElement.checked ? brandArray.push(brnElement.value) : null; });
+
+    // New variable for multiple Checked-BOX 
+    var brandArrayResult = [];
+
+    // Fetching Filtered Brand data
+    brandArray.forEach(value => {
+        brandArrayResult = brandArrayResult.concat(filteredData.filter((checkBoxData) => checkBoxData.brand.includes(value)))
+    });
+
+    // Setting condition whether if check box are checked or not with hep of Ternary operator
+    brandArrayResult.length !== 0 ? idDisplayCard(brandArrayResult) : idDisplayCard(filteredData);
+};
+
+// Search Function
+
+function navSearchFunction() {
+
+    // Storing value in "searchKeyword" variable with help of name attribute
+    var searchKeyword = document.getElementById("navSearch").value.toUpperCase();
+
+    // Fetching Result and Display Data accordingly
+    var searchResult = filteredData.filter((searchItem) => searchItem.product.toUpperCase().includes(searchKeyword));
+
+    idDisplayCard(searchResult);
+};

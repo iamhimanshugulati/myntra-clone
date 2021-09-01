@@ -35,7 +35,7 @@
     <header class="sticky-top">
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#"><img src="images/myntra_logo.png" alt="Myntra_Logo" width="120"
+                <a class="navbar-brand" href="/"><img src="images/myntra_logo.png" alt="Myntra_Logo" width="120"
                         height="60" class="d-inline-block align-text-top"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -62,15 +62,18 @@
                     </ul>
 
                     <!-- Search Bar Start -->
-                    <form class="d-flex flex-row bg-light rounded">
+                    <div class="d-flex flex-row bg-light rounded">
+
                         <div class="p-2 bd-highlight mx-0 mt-2 border-end-0 bg-light pr-2">
                             <i class="fas fa-search" aria-hidden="true"></i>
                         </div>
                         <div class="p-2 bd-highlight" style="width: 400px;">
                             <input class="form-control bg-light me-2 border-0" type="text"
-                                placeholder="Search for products, brands and more" aria-label="Search">
+                                placeholder="Search for products, brands and more" aria-label="Search" id="navSearch"
+                                type="submit" onkeypress="navSearchFunction()">
                         </div>
-                    </form>
+
+                    </div>
                     <!-- Search Bar End -->
 
 
@@ -116,7 +119,7 @@
             </div>
         </nav>
     </header>
-    <!-- Header Start -->
+    <!-- Header End -->
 
 
     <!-- Main Start -->
@@ -135,21 +138,21 @@
 
                         <!-- Gender Start -->
                         <div class="mx-1 my-1 py-1">
-                            <div id="check_Gender"></div>
+                            <div id="checkGender"></div>
 
                         </div>
                         <!-- Gender End -->
 
                         <!-- Categories Start -->
                         <div class="mx-1  my-1 py-1">
-                            <div id="check_Categories"></div>
+                            <div id="checkCategories"></div>
 
                         </div>
                         <!-- Categories End -->
 
                         <!-- Brand Start -->
                         <div class="mx-1  my-1 py-1">
-                            <div id="check_Brand"></div>
+                            <div id="checkBrand"></div>
 
                         </div>
                         <!-- Brand End -->
@@ -167,7 +170,7 @@
                     <section>
 
                         <!-- Products Card Start -->
-                        <div class="row" id="display_card">
+                        <div class="row" id="displayCard">
 
                         </div>
                         <!-- Products Card End -->
